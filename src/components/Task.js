@@ -48,15 +48,8 @@ const Task = () => {
         }
     };
 
-    // useEffect(() => {
-    //     console.log(filterStatus,"filter sttauys")
-    //     if(filterStatus === 'Not Completed' || filterStatus === 'Completed' ) 
-    //     {
-    //       let data = cardData.filter(task => task.status === filterStatus) ;
-    //       console.log(data,"data")
-    //       localStorage.setItem('filterCardData', JSON.stringify(data));
-    //     }
-    // },[filterStatus])
+    useEffect(() => {
+    },[filterStatus])
 
     const handleStatusChange = (e) => {
         setFilterStatus(e.target.value);
