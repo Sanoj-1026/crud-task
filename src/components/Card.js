@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 const Card = ({data,setData}) => {
   const[edit,setEdit] = useState(null);
@@ -21,6 +21,10 @@ const Card = ({data,setData}) => {
     setCardData(updatedCardData);
     localStorage.setItem('cardData', JSON.stringify(updatedCardData));
   };
+  useEffect(() => {
+    // Update cardData state when the data prop changes
+    setCardData(data);
+  }, [data]);
 
   return (
     <div className='d-flex flex-wrap'>

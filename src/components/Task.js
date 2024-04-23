@@ -4,7 +4,7 @@ import Card from './Card';
 const Task = () => {
     const[name,setName] = useState('');
     const[description,setDescription] = useState('');
-    const[filterStatus, setFilterStatus] = useState(null);
+    const[filterStatus, setFilterStatus] = useState('All');
     const initialData = [
         {
             name:"Task-1",
@@ -18,7 +18,9 @@ const Task = () => {
         }
     ];
     const savedCardData = JSON.parse(localStorage.getItem('cardData')? localStorage.getItem('cardData') : null);
+    const filteredCardData = JSON.parse(localStorage.getItem('filteredCardData')? localStorage.getItem('filteredCardData') : null);
     const [cardData,setCardData] = useState(savedCardData ?  savedCardData : initialData);
+    const [filteredData, setFilteredData] = useState(filteredCardData && filterStatus !== 'All' ?  filteredCardData : cardData);
 
     const handleNameChange = (e) => {
         setName(e.target.value);
@@ -48,12 +50,29 @@ const Task = () => {
         }
     };
 
-    useEffect(() => {
-    },[filterStatus])
-
     const handleStatusChange = (e) => {
         setFilterStatus(e.target.value);
+        console.log(e.target.value)
+        if(e.target.value !== "All") {
+            const filtered = cardData?.filter(task => task.status === e.target.value);
+            setFilteredData(filtered);
+            localStorage.setItem('filteredCardData', JSON.stringify(filtered));
+            console.log(filtered)
+        }else  {
+            setFilteredData(cardData);
+            console.log(cardData)
+        }
     }
+
+    useEffect(() => {
+        // Filter the data based on the selected status filter
+        // if (filterStatus === 'All') {
+        //     setFilteredData(cardData); // If filter is 'All', display all data
+        // } else {
+        //     const filtered = cardData.filter(task => task.status === filterStatus);
+        //     setFilteredData(filtered); // Set filtered data based on selected status
+        // }
+    }, [filterStatus, cardData]);
 
   return (
     <div  className='container pt-5'>
@@ -72,7 +91,7 @@ const Task = () => {
                 <div><h5>My Todo </h5></div>
                 <div className='d-flex  gap-2'>
                     <h5>Status Filter:</h5>  
-                    <select name="status" id="status" onChange={(e) => handleStatusChange(e)}>
+                    <select name="status" id="status" onChange={(e) => handleStatusChange(e)} value={filterStatus}>
                         <option value="All" >All</option>
                         <option value="Completed" >Completed</option>
                         <option value="Not Completed" >Not Completed</option>
@@ -81,7 +100,7 @@ const Task = () => {
             </div>
         </div>
         <div className='py-5'>
-            <Card data={cardData} setData={(e) => setCardData(e)}/>
+            <Card data={filteredData} setData={(e) => setCardData(e)}/>
         </div>
     </div>
   )
