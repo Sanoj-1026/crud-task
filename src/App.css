@@ -36,3 +36,11 @@
     transform: rotate(360deg);
   }
 }
+
+.btn-width {
+  width: 100px !important;
+}
+.btn-warning {
+  background-color: rgb(255, 166, 0) !important;
+  color: white !important;
+}
