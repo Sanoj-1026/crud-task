@@ -31,20 +31,20 @@ const Card = ({data,setData}) => {
                 <div className='pb-2'> Name : {d?.name}</div>
                 <div className='pb-2'> Description : {d?.desc}</div>
                 {
-                  edit != index && (<div className='pb-2'> Status: {d?.status}</div>)
+                  edit !== index && (<div className='pb-2'> Status: {d?.status}</div>)
                 }
                 {
                   edit === index && (
                     <div>
                         Status :  <select name="status" id="status" onChange={(e) => handleStatusChange(e, index)}>
-                                    <option value="Completed" selected={d?.status == "Completed"  ? true : false}>Completed</option>
-                                    <option value="Not Completed" selected={d?.status == "Not Completed"  ? true : false}>Not Completed</option>
+                                    <option value="Completed" selected={d?.status === "Completed"  ? true : false}>Completed</option>
+                                    <option value="Not Completed" selected={d?.status === "Not Completed"  ? true : false}>Not Completed</option>
                                   </select>
                     </div>
                   )
                 }
                  {
-                  edit != index && (
+                  edit !== index && (
                 <div className='d-flex justify-content-end gap-3 pt-4'>
                   <button className='btn btn-success btn-width' onClick={() => setEdit(index)}>Edit</button>
                   <button className='btn btn-warning btn-width' onClick={() => onDeleteClick(index)}>Delete</button>
